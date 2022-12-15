@@ -10,27 +10,26 @@ namespace RMS_NEW.Controllers
 {
     public class HomeController : Controller
     {
+        db dbop = new db();
         public IActionResult Index()
         {
+            //return View();
             return View();
         }
-
-        public IActionResult About()
+        [HttpPost]
+        public IActionResult Index([Bind] Ad_login ad)
         {
-            ViewData["Message"] = "Your application description page.";
+            string res = dbop.LoginCheck(ad);
+            TempData["msg"] = res;
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            //if (res=="")
+            //{
+            //    TempData["msg"] = "You are welcome to Admin Section";
+            //}
+            //else
+            //{
+            //    TempData["msg"] = "Admin id or Password is wrong.!";
+            //}
             return View();
         }
 
@@ -38,6 +37,8 @@ namespace RMS_NEW.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            //test
+            //test23
         }
     }
 }
