@@ -13,32 +13,30 @@ namespace RMS_NEW.Controllers
         db dbop = new db();
         public IActionResult Index()
         {
-            //return View();
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index([Bind] Ad_login ad)
         {
-            string res = dbop.LoginCheck(ad);
-            TempData["msg"] = res;
+            if (ModelState.IsValid)
+            {
 
-            //if (res=="")
-            //{
-            //    TempData["msg"] = "You are welcome to Admin Section";
-            //}
-            //else
-            //{
-            //    TempData["msg"] = "Admin id or Password is wrong.!";
-            //}
+                string res = dbop.LoginCheck(ad);
+                TempData["msg"] = res;
+                //return RedirectToAction("Index");
+            }
+            
+
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            //test
-            //test23
+
         }
     }
 }
